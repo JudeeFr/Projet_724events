@@ -15,7 +15,12 @@ import { useData } from "../../contexts/DataContext";
 
 
 const Page = () => {
-  const {last} = useData()
+  const {data} = useData();
+  const last =
+    data && data.events && data.events.length > 0
+      ? data.events[data.events.length - 1]
+      : null;
+
   return <>
     <header>
     <Menu />
@@ -118,13 +123,18 @@ const Page = () => {
     <footer className="row">
       <div className="col presta">
         <h3>Notre derniére prestation</h3>
-        <EventCard
-          imageSrc={last?.cover}
-          title={last?.title}
-          date={new Date(last?.date)}
-          small
-          label="boom"
-        />
+        {last && (
+            <EventCard
+              data-testid="last-event-card"
+              imageSrc={last?.cover}
+              imageAlt={last?.description}
+              title={last?.title}
+              date={new Date(last?.date)}
+              small
+              label={last?.type}
+            />
+          )}
+
       </div>
       <div className="col contact">
         <h3>Contactez-nous</h3>
@@ -132,16 +142,16 @@ const Page = () => {
         <div>01 23 45 67 89</div>
         <div>contact@77events.com</div>
         <div>
-          <a href="#twitch">
+          <a href="https://www.twitch.tv" target="_blank" rel="noreferrer">
             <Icon name="twitch" />
           </a>
-          <a href="#facebook">
+          <a href="https://facebook.com" target="_blank" rel="noreferrer">
             <Icon name="facebook" />
           </a>
-          <a href="#twitter">
+          <a href="https://twitter.com" target="_blank" rel="noreferrer">
             <Icon name="twitter" />
           </a>
-          <a href="#youtube">
+          <a href="https://youtube.com" target="_blank" rel="noreferrer">
             <Icon name="youtube" />
           </a>
         </div>
